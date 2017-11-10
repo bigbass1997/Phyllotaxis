@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 public class Sunflower {
 	
 	private final int c = 4;
-	private final float theta = 137.5f;
+	private final float theta = 137.3f;
 	
 	public ArrayList<Particle> particles;
 	

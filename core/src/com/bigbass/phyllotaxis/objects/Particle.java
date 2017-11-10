@@ -1,7 +1,5 @@
 package com.bigbass.phyllotaxis.objects;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -9,7 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Particle {
 	
-	private static final Random rand = new Random();
+	private static float h = 0;
+	private static float s = 0;
+	private static float v = 1;
 	
 	public final Color color;
 	
@@ -20,7 +20,7 @@ public class Particle {
 	
 	public Particle(float theta, float r, float xOffset, float yOffset, int n){
 		//color = new Color(0xFFFFFFFF);
-		color = setRandomColor();
+		color = setColor();
 		
 		offset = new Vector2(xOffset, yOffset);
 		
@@ -50,13 +50,20 @@ public class Particle {
 		sr.rect(pos.x - r, pos.y - r, r * 2, r * 2);
 	}
 	
-	private Color setRandomColor(){
+	private Color setColor(){
 		Color c = new Color();
 		
 		c.a = 1.0f;
-		c.r = rand.nextFloat();
-		c.g = rand.nextFloat();
-		c.b = rand.nextFloat();
+		c.fromHsv(h, s, v);
+		
+		s += 0.05f;
+		if(s >= 1){
+			s = 0;
+			h += 1;
+			if(h >= 360){
+				h = 0;
+			}
+		}
 		
 		return c;
 	}
