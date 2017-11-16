@@ -60,8 +60,9 @@ public class PrimaryPanel extends Panel {
 		
 		panelGroup.update(delta);
 		
-		String info = String.format("Data:%n  FPS: %s",
-				Gdx.graphics.getFramesPerSecond()
+		String info = String.format("Data:%n  FPS: %s%n  Particles: %s",
+				Gdx.graphics.getFramesPerSecond(),
+				sun.particles.size()
 			);
 		
 		infoLabel.setText(info);
