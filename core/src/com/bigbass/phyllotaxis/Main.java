@@ -2,7 +2,9 @@ package com.bigbass.phyllotaxis;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.bigbass.phyllotaxis.fonts.FontManager;
 import com.bigbass.phyllotaxis.panel.PanelGroup;
@@ -14,6 +16,8 @@ public class Main extends ApplicationAdapter {
 	
 	private PrimaryPanel primaryPanel;
 	private PanelGroup panels;
+	
+	private boolean isScreenshotReady = false;
 	
 	@Override
 	public void create () {
@@ -47,6 +51,14 @@ public class Main extends ApplicationAdapter {
 		float delta = Gdx.graphics.getDeltaTime();
 		
 		panels.update(delta);
+		
+		Input input = Gdx.input;
+		if(input.isKeyPressed(Keys.S) && isScreenshotReady){
+			ScreenshotFactory.saveScreen();
+			isScreenshotReady = false;
+		} else if(!input.isKeyPressed(Keys.S) && !isScreenshotReady){
+			isScreenshotReady = true;
+		}
 	}
 	
 	@Override

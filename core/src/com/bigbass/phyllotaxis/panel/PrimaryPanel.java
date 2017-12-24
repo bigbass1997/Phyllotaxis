@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.bigbass.phyllotaxis.Main;
@@ -41,6 +42,11 @@ public class PrimaryPanel extends Panel {
 	}
 	
 	public void render() {
+		sr.begin(ShapeType.Filled);
+		sr.setColor(0, 0, 0, 1);
+		sr.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		sr.end();
+		
 		sun.render(sr);
 		
 		panelGroup.render();
@@ -67,6 +73,7 @@ public class PrimaryPanel extends Panel {
 		
 		infoLabel.setText(info);
 		infoLabel.setPosition(10, Gdx.graphics.getHeight() - (infoLabel.getPrefHeight() / 2) - 5);
+		infoLabel.setText("");
 	}
 	
 	public boolean isActive() {

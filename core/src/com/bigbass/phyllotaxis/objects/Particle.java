@@ -1,5 +1,7 @@
 package com.bigbass.phyllotaxis.objects;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -39,6 +41,7 @@ public class Particle {
 		float newTheta = polar.x + (delta * n);
 		
 		polar.x = newTheta;
+		polar.y -= 0.5f;
 		//pos = toCart(polar.x, pos.y);
 		pos = toCart(polar.x, polar.y);
 		pos.add(offset);
