@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.bigbass.phyllotaxis.Main;
+import com.bigbass.phyllotaxis.SimOptions;
 import com.bigbass.phyllotaxis.objects.Sunflower;
 import com.bigbass.phyllotaxis.skins.SkinManager;
 
@@ -21,6 +22,8 @@ public class PrimaryPanel extends Panel {
 	
 	private Sunflower sun;
 	
+	private float scalar = 1;
+	
 	public PrimaryPanel() {
 		super();
 		
@@ -30,11 +33,22 @@ public class PrimaryPanel extends Panel {
 		
 		stage = new Stage();
 		Main.inputMultiplexer.addProcessor(stage);
+		Main.inputMultiplexer.addProcessor(new ScrollwheelInputAdapter(){
+			@Override
+			public boolean scrolled(int amount) {
+				if(amount == 1){
+					changeCameraViewport(0.1f);
+				} else if(amount == -1){
+					changeCameraViewport(-0.1f);
+				}
+				return true;
+			}
+		});
 		
 		infoLabel = new Label("", SkinManager.getSkin("fonts/computer.ttf", 24));
 		stage.addActor(infoLabel);
 		
-		sr = new ShapeRenderer(50000);
+		sr = new ShapeRenderer(500000);
 		sr.setAutoShapeType(true);
 		sr.setProjectionMatrix(cam.combined);
 		
@@ -43,8 +57,8 @@ public class PrimaryPanel extends Panel {
 	
 	public void render() {
 		sr.begin(ShapeType.Filled);
-		sr.setColor(0, 0, 0, 1);
-		sr.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		sr.setColor(SimOptions.getInstance().backgroundColor);
+		sr.rect(-(cam.viewportWidth * 0.5f), -(cam.viewportHeight * 0.5f), Gdx.graphics.getWidth() * scalar * 2, Gdx.graphics.getHeight() * scalar * 2);
 		sr.end();
 		
 		sun.render(sr);
@@ -84,5 +98,15 @@ public class PrimaryPanel extends Panel {
 		stage.dispose();
 		sr.dispose();
 		panelGroup.dispose();
+	}
+	
+	private void changeCameraViewport(float dscalar){
+		scalar += dscalar;
+		
+		cam.viewportWidth = Gdx.graphics.getWidth() * scalar;
+		cam.viewportHeight = Gdx.graphics.getHeight() * scalar;
+		cam.update();
+
+		sr.setProjectionMatrix(cam.combined);
 	}
 }

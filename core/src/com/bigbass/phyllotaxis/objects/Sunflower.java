@@ -5,17 +5,23 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.bigbass.phyllotaxis.SimOptions;
 
 public class Sunflower {
 	
-	private final int c = 4;
-	private final float theta = 137.3f;
+	private int c;
+	private float theta;
 	
 	public ArrayList<Particle> particles;
 	
 	private float deltaCount = 0;
 	
 	public Sunflower(){
+		SimOptions opt = SimOptions.getInstance();
+		
+		c = opt.expandConstant;
+		theta = opt.rotateTheta;
+		
 		particles = new ArrayList<Particle>();
 	}
 	
@@ -28,17 +34,19 @@ public class Sunflower {
 	}
 	
 	public void update(float delta){
+		SimOptions opt = SimOptions.getInstance();
+		
 		// slowing generate new particles
 		deltaCount += delta;
-		if(deltaCount >= 0.01f){
+		if(deltaCount >= opt.genRate){
 			deltaCount = 0;
-			for(int i = 0; i < 5; i++){
+			for(int i = 0; i < opt.particlesPerGen; i++){
 				int n = particles.size();
 				particles.add(new Particle(n * theta, (float) (c * Math.sqrt(n)), Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f, n));
 			}
 		}
 		
-		changeTheta(0.001f);
+		changeTheta(opt.rotateRate);
 	}
 	
 	public void changeTheta(float delta){
