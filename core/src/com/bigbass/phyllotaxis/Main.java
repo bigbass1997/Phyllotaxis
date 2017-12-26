@@ -59,6 +59,10 @@ public class Main extends ApplicationAdapter {
 		} else if(!input.isKeyPressed(Keys.S) && !isScreenshotReady){
 			isScreenshotReady = true;
 		}
+		
+		if(input.isKeyJustPressed(Keys.ESCAPE)){
+			Gdx.app.exit();
+		}
 	}
 	
 	@Override
