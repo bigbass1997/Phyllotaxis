@@ -22,7 +22,7 @@ public class ScreenshotFactory {
 			Date date = new Date();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy-HH.mm.ss.S");
 			
-			String filename = "saved-trees/tree" + d + dateFormat.format(date) + format;
+			String filename = "screenshots/pic" + d + dateFormat.format(date) + format;
 			
             FileHandle fh = new FileHandle(filename);
             
